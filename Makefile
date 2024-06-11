@@ -1,9 +1,9 @@
 venv:
 	python -m venv .venv
-	.venv/bin/pip install -r requirements.txt
+	source .venv/bin/activate
 
 install:
-	pip install -r requirements.txt
+	.venv/bin/pip install -r requirements.txt
 
 fetch-data:
 	mkdir -p aphis-inspection-reports/data/combined
