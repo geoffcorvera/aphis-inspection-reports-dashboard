@@ -11,7 +11,7 @@ fetch-data:
 	wget -P aphis-inspection-reports/data/combined https://github.com/data-liberation-project/aphis-inspection-reports/raw/main/data/combined/inspections.csv
 
 load-csv-to-database:
-	python3 scripts/create_db.py
+	.venv/bin/python3 scripts/create_db.py
 
 database: fetch-data load-csv-to-database
 
