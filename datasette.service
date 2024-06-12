@@ -1,0 +1,14 @@
+[Unit]
+Description=Datasette
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+Environment=DATASETTE_SECRET=ssseeecccrrreeettt
+WorkingDirectory=/home/ubuntu/aphis-inspection-reports-dashboard
+ExecStart=/home/ubuntu/.local/bin/datasette serve . -h 127.0.0.1 -p 8000
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
