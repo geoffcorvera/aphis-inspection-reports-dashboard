@@ -10,9 +10,10 @@ fetch-data:
 	wget -P aphis-inspection-reports/data/combined https://raw.githubusercontent.com/data-liberation-project/aphis-inspection-reports/main/data/combined/inspections-citations.csv
 	wget -P aphis-inspection-reports/data/combined https://github.com/data-liberation-project/aphis-inspection-reports/raw/main/data/combined/inspections.csv
 
-database:
-	fetch-data
+create-db:
 	.venv/bin/python3 scripts/create_db.py
+
+database: fetch-data create-db
 
 serve:
 	.venv/bin/datasette ./aphis_reports.db
