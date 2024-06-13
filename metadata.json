@@ -1,0 +1,17 @@
+{
+    "databases": {
+        "citations": {
+            
+        },
+        "inspections": {
+
+        }
+    },
+    "plugins": {
+        "datasette-faiss": {
+            "tables": [
+                ["citations"]
+            ]
+        }
+    }
+}
