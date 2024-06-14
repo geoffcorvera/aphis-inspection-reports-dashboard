@@ -1,3 +1,5 @@
+include .env
+
 venv:
 	python3 -m venv .venv
 	.venv/bin/pip install -r requirements.txt
@@ -17,4 +19,4 @@ create-db:
 database: fetch-data create-db
 
 serve:
-	.venv/bin/datasette ./aphis_reports.db
+	.venv/bin/datasette ./aphis_reports.db --root

@@ -8,10 +8,10 @@
         }
     },
     "plugins": {
-        "datasette-faiss": {
-            "tables": [
-                ["citations"]
-            ]
+        "datasette-embeddings": {
+            "api_key": {
+                "$env": "OPENAI_API_KEY"
+            }
         }
     }
 }
