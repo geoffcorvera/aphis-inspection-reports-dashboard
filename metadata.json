@@ -1,12 +1,5 @@
 {
-    "databases": {
-        "citations": {
-            
-        },
-        "inspections": {
-
-        }
-    },
+    "databases": {},
     "plugins": {
         "datasette-embeddings": {
             "api_key": {

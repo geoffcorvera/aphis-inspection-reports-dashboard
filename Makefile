@@ -6,6 +6,8 @@ venv:
 
 install:
 	.venv/bin/pip install -r requirements.txt
+	.venv/bin/datasette install datasette-enrichments
+	.venv/bin/datasette install datasette-embeddings
 
 fetch-data:
 	mkdir -p aphis-inspection-reports/data/combined
@@ -19,4 +21,5 @@ create-db:
 database: fetch-data create-db
 
 serve:
-	.venv/bin/datasette ./aphis_reports.db --root
+	@echo "OPENAI_API_KEY is set to: ${OPENAI_API_KEY}"
+	.venv/bin/datasette ./aphis_reports.db --root --plugins-dir=plugins/ --metadata metadata.json --setting sql_time_limit_ms 3500
