@@ -1,0 +1,15 @@
+{% extends "default:table.html" %}
+{% block content %}
+<h1>Semantic search: {{ table }}</h1>
+<form method="POST" action="/{{database}}/{{table}}/-/semantic-search">
+  <p><label>Search
+    <input type="text" name="q" size="60">
+    <input type="submit" value="Go">
+    <input type="hidden" name="csrftoken" value="{{ csrftoken() }}">
+  </p>
+</form>
+<p>Find rows that are semantically close to your search query.</p>
+
+{{ super() }}
+
+{% endblock %}
