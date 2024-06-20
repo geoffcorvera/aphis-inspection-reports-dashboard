@@ -17,6 +17,7 @@ fetch-data:
 create-db:
 	.venv/bin/python3 scripts/create_db.py
 	.venv/bin/sqlite-utils enable-fts aphis_reports.db citations narrative
+	.venv/bin/sqlite-utils transform aphis_reports.db citations --pk rowid
 
 database: fetch-data create-db
 
