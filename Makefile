@@ -21,5 +21,10 @@ create-db:
 database: fetch-data create-db
 
 serve:
-	@echo "OPENAI_API_KEY is set to: ${OPENAI_API_KEY}"
-	.venv/bin/datasette ./aphis_reports.db --root --plugins-dir=plugins/ --metadata metadata.json --setting sql_time_limit_ms 3500
+	.venv/bin/datasette ./aphis_reports.db --plugins-dir=plugins/ --metadata metadata.json
+
+serve-root:
+	.venv/bin/datasette ./aphis_reports.db --root --plugins-dir=plugins/ --metadata metadata.json
+
+serve-emb:
+	.venv/bin/datasette ./aphis_reports_embeddings.db --plugins-dir=plugins/ --metadata metadata.json --setting sql_time_limit_ms 3500
