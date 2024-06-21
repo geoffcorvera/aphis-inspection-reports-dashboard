@@ -14,7 +14,9 @@ create-db:
 	.venv/bin/python3 scripts/create_db.py
 	.venv/bin/sqlite-utils enable-fts aphis_reports.db citations narrative
 
-database: fetch-data create-db
+database:
+	fetch-data
+	create-db
 
 serve:
 	.venv/bin/datasette ./aphis_reports.db
