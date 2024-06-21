@@ -20,9 +20,7 @@ create-db:
 	.venv/bin/sqlite-utils transform aphis_reports.db citations --pk rowid
 	.venv/bin/sqlite-utils create-view aphis_reports.db citation_inspection "select hash_id, web_inspectionDate, code, repeat, pdf_insp_type, pdf_animals_total, web_siteName, web_certType, pdf_customer_id, pdf_customer_name, pdf_customer_addr, customer_state, pdf_site_id, desc, narrative from citations natural join inspections"
 
-database:
-	fetch-data
-	create-db
+database: fetch-data create-db
 
 serve:
 	.venv/bin/datasette ./aphis_reports.db --plugins-dir=plugins/ --metadata metadata.json
