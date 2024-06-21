@@ -3,7 +3,7 @@
   <label for="previous-search-query">Results for:</label>
   <p id="previous-search-query"></p>
 </div>
-<form method="POST" action="/{{database}}/citations/-/semantic-search" onsubmit="storeQuery()">
+<form method="POST" action="/{{database}}/citations/-/semantic-search-filtered" onsubmit="storeQuery()">
   <p><label>Search
     <input type="text" name="q" size="60" id="search-query">
     <input type="submit" value="Go">
