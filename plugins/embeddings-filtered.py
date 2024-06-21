@@ -57,6 +57,7 @@ async def embeddings_semantic_search(datasette, request):
 
     if request.method == "POST":
         form = await request.post_vars()
+        print("form", form)
         q = (form.get("q") or "").strip()
         if not q:
             datasette.add_message(
@@ -98,6 +99,9 @@ async def embeddings_semantic_search(datasette, request):
             .format(column=column_name, table=table, pk_join=pk_join)
             .strip()
         )
+        print("sql comparison")
+        print(sql)
+        print(form.get('sql'))
         return Response.redirect(
             datasette.urls.database(database)
             + "?"
@@ -105,10 +109,10 @@ async def embeddings_semantic_search(datasette, request):
                 {"sql": sql, "vector": blob.hex().upper(), "_hide_sql": 1, "text": q}
             )
         )
-    print("welp")
+
     return Response.html(
         await datasette.render_template(
-            "embeddings_semantic_search.html",
+            "embeddings_filtered.html",
             {
                 "table": table,
                 "database": database,
