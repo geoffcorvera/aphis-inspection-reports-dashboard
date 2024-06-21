@@ -1,0 +1,14 @@
+{% include 'semantic_search_form.html' %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const query = localStorage.getItem('semanticSearchQuery');
+        if (query) {
+            document.getElementById('previous-search-query').innerText = query;
+            document.getElementById('search-container').style.display = 'block';
+        } else {
+            document.getElementById('search-container').style.display = 'none';
+        }
+        // localStorage.setItem('semanticSearchQuery', "");
+  });
+</script>

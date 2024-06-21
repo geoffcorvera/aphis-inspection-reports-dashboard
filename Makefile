@@ -17,6 +17,7 @@ fetch-data:
 create-db:
 	.venv/bin/python3 scripts/create_db.py
 	.venv/bin/sqlite-utils enable-fts aphis_reports.db citations narrative
+	.venv/bin/sqlite-utils transform aphis_reports.db citations --pk rowid
 
 database: fetch-data create-db
 
@@ -27,4 +28,4 @@ serve-root:
 	.venv/bin/datasette ./aphis_reports.db --root --plugins-dir=plugins/ --metadata metadata.json
 
 serve-emb:
-	.venv/bin/datasette ./aphis_reports_embeddings.db --plugins-dir=plugins/ --metadata metadata.json --setting sql_time_limit_ms 3500
+	.venv/bin/datasette ./aphis_reports_embeddings.db --plugins-dir=plugins/ --metadata metadata.json --setting sql_time_limit_ms 3500 --template-dir=templates/

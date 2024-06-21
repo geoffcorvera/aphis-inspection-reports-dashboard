@@ -1,0 +1,36 @@
+<h1>Semantic search citations</h1>
+<div class="search-container" id="search-container" style="display: none">
+  <label for="previous-search-query">Results for:</label>
+  <p id="previous-search-query"></p>
+</div>
+<form method="POST" action="/{{database}}/citations/-/semantic-search" onsubmit="storeQuery()">
+  <p><label>Search
+    <input type="text" name="q" size="60" id="search-query">
+    <input type="submit" value="Go">
+    <input type="hidden" name="csrftoken" value="{{ csrftoken() }}">
+  </p>
+</form>
+<p>Find rows that are semantically close to your search query.</p>
+<script>
+    function storeQuery() {
+      const query = document.getElementById('search-query').value;
+      localStorage.setItem('semanticSearchQuery', query);
+    }
+</script>
+<style>
+  .search-container {
+    display: flex;
+    align-items: center;
+    margin: 10px;
+  }
+
+  .search-container label {
+    margin-right: 10px;
+  }
+
+  .search-container p {
+    margin: 0;
+    margin-left: 10px;
+    flex-shrink: 0; /* idk why this is taking up the whole page width */
+  }
+</style>
