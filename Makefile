@@ -19,4 +19,4 @@ database:
 	create-db
 
 serve:
-	.venv/bin/datasette ./aphis_reports.db
+	.venv/bin/datasette $(db) --setting sql_time_limit_ms 3500
