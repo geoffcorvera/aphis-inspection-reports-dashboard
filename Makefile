@@ -13,6 +13,7 @@ fetch-data:
 create-db:
 	.venv/bin/python3 scripts/create_db.py
 	.venv/bin/sqlite-utils enable-fts aphis_reports.db citations narrative
+	.venv/bin/sqlite-utils create-view aphis_reports.db citation_inspection "select hash_id, web_inspectionDate, code, repeat, pdf_insp_type, pdf_animals_total, web_siteName, web_certType, pdf_customer_id, pdf_customer_name, pdf_customer_addr, customer_state, pdf_site_id, desc, narrative from citations natural join inspections"
 
 database:
 	fetch-data
