@@ -6,8 +6,7 @@ Consult the [`Makefile`](Makefile) to understand the available `make` commands.
 - Fetch data and load to sqlite database `make database`- Fetch data and load to sqlite database `make database`
 
 # Serve Locally
-After creating database: `make serve db=<path to sqlite db file>`.
-Running `make database` will create `aphis_reports.db`.
+After creating database: `make serve`, `make serve-root`, `serve-emb`, or `serve-prod`
 
 # Deploy
 - Copy the .nginx file into the nginx folder of the server, and make sure it's enabled and not blocked by firewalls
