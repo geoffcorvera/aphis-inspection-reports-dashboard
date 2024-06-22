@@ -64,6 +64,13 @@ async def embeddings_semantic_search(datasette, request):
                 request, "Search query is required", type=datasette.ERROR
             )
             return Response.redirect(request.path)
+        current_sql = (form.get("sql") or "").strip()
+        if not current_sql:
+            datasette.add_message(
+                request, "SQL is required", type=datasette.ERROR
+            )
+            return Response.redirect(request.path)
+        print(current_sql)
 
         # Just use first model for the moment
         column_name, model_name = next(iter(embedding_columns.items()))
@@ -99,9 +106,9 @@ async def embeddings_semantic_search(datasette, request):
             .format(column=column_name, table=table, pk_join=pk_join)
             .strip()
         )
-        print("sql comparison")
-        print(sql)
-        print(form.get('sql'))
+        print("= sql comparison =")
+        print("1.", sql)
+        print("2.", form.get('sql'))
         return Response.redirect(
             datasette.urls.database(database)
             + "?"

@@ -1,19 +1,24 @@
-<h1>Semantic search citations</h1>
+
 <div class="search-container" id="search-container" style="display: none">
   <label for="previous-search-query">Results for:</label>
   <p id="previous-search-query"></p>
 </div>
 <form method="POST" action="/{{database}}/citations/-/semantic-search-filtered" onsubmit="storeQuery()">
-  <p><label>Search
+  <p><label>Semantic search
     <input type="text" name="q" size="60" id="search-query">
     <input type="submit" value="Go">
     <input type="hidden" name="csrftoken" value="{{ csrftoken() }}">
     {% for key in request.args %}
       <input type="hidden" name="{{ key }}" value="{{ request.args[key] }}">
     {% endfor %}
+    {% if query and query.sql %}
+      <input type="hidden" name="sql" value="{{ query.sql }}">
+    {% else %}
+      <input type="hidden" name="sql" value="select rowid, hash_id, code, kind, repeat, [desc], narrative from citations order by rowid limit 101">
+    {% endif %}
   </p>
 </form>
-<p>Find rows that are semantically close to your search query.</p>
+
 <script>
     function storeQuery() {
       const query = document.getElementById('search-query').value;

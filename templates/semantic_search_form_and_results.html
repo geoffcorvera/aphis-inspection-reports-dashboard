@@ -1,5 +1,5 @@
 {% include 'semantic_search_form.html' %}
-
+<!-- deprecated -->
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
         const query = localStorage.getItem('semanticSearchQuery');
@@ -9,6 +9,6 @@
         } else {
             document.getElementById('search-container').style.display = 'none';
         }
-        // localStorage.setItem('semanticSearchQuery', "");
+        localStorage.setItem('semanticSearchQuery', ""); // downside is this erases if you reload the page, but won't show inaccurate results
   });
 </script>
