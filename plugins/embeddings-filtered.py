@@ -65,6 +65,8 @@ async def embeddings_semantic_search(datasette, request):
             )
             return Response.redirect(request.path)
         current_sql = (form.get("sql") or "").strip()
+        if 'limit' in current_sql:
+            current_sql = current_sql.split('limit')[0]
         if not current_sql:
             datasette.add_message(
                 request, "SQL is required", type=datasette.ERROR
@@ -83,32 +85,31 @@ async def embeddings_semantic_search(datasette, request):
         db = datasette.get_database(database)
         pk_join = " and ".join(
             [
-                f"{table}.{column} = _embeddings_{table}.{column}"
+                f"filtered_{table}.{column} = _embeddings_{table}.{column}"
                 for column in await db.primary_keys(table)
             ]
         )
-        print("pk_join", pk_join, "table", table)
-        print("db.primary_keys(table)", await db.primary_keys(table))
 
         # Redirect to the SQL query against the table
         sql = (
             textwrap.dedent(
-                """
+        """
         select
-          "{table}".*,
+          filtered_{table}.*,
           embeddings_cosine("_embeddings_{table}"."{column}", unhex(:vector)) as _similarity
-        from "{table}" join "_embeddings_{table}"
+        from  
+          ({current_sql}) as filtered_{table}
+        join "_embeddings_{table}"
         on {pk_join}
         where "_embeddings_{table}"."{column}" is not null
         order by _similarity desc
-        """
-            )
-            .format(column=column_name, table=table, pk_join=pk_join)
+        """)
+            .format(column=column_name, table=table, pk_join=pk_join, current_sql=current_sql)
             .strip()
         )
         print("= sql comparison =")
         print("1.", sql)
-        print("2.", form.get('sql'))
+        print("2.", current_sql)
         return Response.redirect(
             datasette.urls.database(database)
             + "?"

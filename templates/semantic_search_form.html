@@ -14,7 +14,7 @@
     {% if query and query.sql %}
       <input type="hidden" name="sql" value="{{ query.sql }}">
     {% else %}
-      <input type="hidden" name="sql" value="select rowid, hash_id, code, kind, repeat, [desc], narrative from citations order by rowid limit 101">
+      <input type="hidden" name="sql" value="select rowid, hash_id, code, kind, repeat, [desc], narrative from citations order by rowid">
     {% endif %}
   </p>
 </form>
