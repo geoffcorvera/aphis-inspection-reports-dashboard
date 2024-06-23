@@ -8,13 +8,19 @@
     <input type="text" name="q" size="60" id="search-query">
     <input type="submit" value="Go">
     <input type="hidden" name="csrftoken" value="{{ csrftoken() }}">
-    {% for key in request.args %}
+    <!-- {% for key in request.args %}
       <input type="hidden" name="{{ key }}" value="{{ request.args[key] }}">
-    {% endfor %}
+    {% endfor %} -->
     {% if query and query.sql %}
       <input type="hidden" name="sql" value="{{ query.sql }}">
     {% else %}
       <input type="hidden" name="sql" value="select rowid, hash_id, code, kind, repeat, [desc], narrative from citations order by rowid">
+    {% endif %}
+    {% if query and query.params %}
+      {% for key in query.params %}
+        <input type="hidden" name="{{ key }}" value="{{ query.params[key] }}">
+        <p>{{key}}: {{ query.params[key] }}</p>
+      {% endfor %}
     {% endif %}
   </p>
 </form>

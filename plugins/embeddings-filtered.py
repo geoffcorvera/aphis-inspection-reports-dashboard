@@ -64,14 +64,18 @@ async def embeddings_semantic_search(datasette, request):
                 request, "Search query is required", type=datasette.ERROR
             )
             return Response.redirect(request.path)
+        else:
+            del form['q']
         current_sql = (form.get("sql") or "").strip()
-        if 'limit' in current_sql:
-            current_sql = current_sql.split('limit')[0]
         if not current_sql:
             datasette.add_message(
                 request, "SQL is required", type=datasette.ERROR
             )
             return Response.redirect(request.path)
+        else:
+            del form['sql']
+        if 'limit' in current_sql:
+            current_sql = current_sql.split('limit')[0]
         print(current_sql)
 
         # Just use first model for the moment
@@ -114,7 +118,7 @@ async def embeddings_semantic_search(datasette, request):
             datasette.urls.database(database)
             + "?"
             + urllib.parse.urlencode(
-                {"sql": sql, "vector": blob.hex().upper(), "_hide_sql": 1, "text": q}
+                {"sql": sql, "vector": blob.hex().upper(), "_hide_sql": 1, "text": q, **form}
             )
         )
 
