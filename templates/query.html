@@ -1,8 +1,20 @@
 {% extends "default:query.html" %}
 {% block content %}
-
-{% include 'semantic_search_form_and_results.html' %}
-
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const query = localStorage.getItem('semanticSearchQuery');
+        if (query) {
+            document.getElementById('previous-search-query').innerText = query;
+            document.getElementById('search-container').style.display = 'block';
+        } else {
+            document.getElementById('search-container').style.display = 'none';
+        }
+        localStorage.setItem('semanticSearchQuery', ""); // downside is this erases if you reload the page, but won't show inaccurate results
+  });
+</script>
+<div style="margin: 10px;">
+<form><input value="New semantic search" type="submit" onclick="window.location.href='/{{ database }}/citations/'"></input></form>
+</div>
 {{ super() }}
 
 {% endblock %}
