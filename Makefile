@@ -20,17 +20,20 @@ create-db:
 	.venv/bin/sqlite-utils transform aphis_reports.db citations --pk rowid
 	.venv/bin/sqlite-utils aphis_reports.db "select hash_id, web_inspectionDate, code, repeat, pdf_insp_type, pdf_animals_total, web_siteName, web_certType, pdf_customer_id, pdf_customer_name, pdf_customer_addr, customer_state, pdf_site_id, desc, narrative from citations natural join inspections" --csv > prejoined.csv
 	.venv/bin/sqlite-utils insert aphis_reports.db citation_inspection prejoined.csv --csv
+
+load-embeddings:
+	sqlite3 aphis_reports_embeddings.db ".dump _embeddings_citations" > embeddings.sql
+	sqlite3 aphis_reports.db < embeddings.sql
+	sqlite-utils rename-table aphis_reports.db _embeddings_citations _embeddings_citation_inspection
+	sqlite-utils transform aphis_reports.db citation_inspection --pk rowid
 	
-database: fetch-data create-db
+database: fetch-data create-db load-embeddings
 
 serve:
-	.venv/bin/datasette ./aphis_reports.db --plugins-dir=plugins/ --metadata metadata.json
+	.venv/bin/datasette ./aphis_reports.db --plugins-dir=plugins/ --metadata metadata.json --setting sql_time_limit_ms 5000 --template-dir=templates/
 
 serve-root:
 	.venv/bin/datasette ./aphis_reports.db --root --plugins-dir=plugins/ --metadata metadata.json
-
-serve-emb:
-	.venv/bin/datasette ./aphis_reports_embeddings.db --plugins-dir=plugins/ --metadata metadata.json --setting sql_time_limit_ms 5000 --template-dir=templates/
 
 serve-prod:
 	.venv/bin/datasette ./aphis_reports_embeddings.db --plugins-dir=plugins/ --metadata metadata.json --setting sql_time_limit_ms 20000 --template-dir=templates/ -h 127.0.0.1 -p 8000
