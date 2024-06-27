@@ -17,19 +17,18 @@ fetch-data:
 prejoin-data:
 	.venv/bin/sqlite-utils aphis_reports.db "select hash_id, web_inspectionDate, code, repeat, pdf_insp_type, pdf_animals_total, web_siteName, web_certType, pdf_customer_id, pdf_customer_name, pdf_customer_addr, customer_state, pdf_site_id, desc, narrative from citations natural join inspections" --csv > prejoined.csv
 	.venv/bin/sqlite-utils insert aphis_reports.db citation_inspection prejoined.csv --csv
+	.venv/bin/sqlite-utils transform aphis_reports.db citation_inspection --add-foreign-key hash_id inspections hash_id
+	rm prejoined.csv
 
 create-db:
 	.venv/bin/python3 scripts/create_db.py
 	.venv/bin/sqlite-utils enable-fts aphis_reports.db citations narrative
 	.venv/bin/sqlite-utils transform aphis_reports.db citations --pk rowid
-	.venv/bin/sqlite-utils aphis_reports.db "select hash_id, web_inspectionDate, code, repeat, kind, pdf_insp_type, pdf_animals_total, web_siteName, web_certType, pdf_customer_id, pdf_customer_name, pdf_customer_addr, customer_state, pdf_site_id, desc, narrative from citations natural join inspections" --csv > prejoined.csv
-	.venv/bin/sqlite-utils insert aphis_reports.db citation_inspection prejoined.csv --csv
-	.venv/bin/sqlite-utils transform aphis_reports.db citation_inspection --add-foreign-key hash_id inspections hash_id
 	
 database: fetch-data create-db prejoin-data
 
 serve:
-	.venv/bin/datasette ./aphis_reports.db --plugins-dir=plugins/ --metadata metadata.json
+	.venv/bin/datasette ./aphis_reports.db --plugins-dir=plugins/ --metadata metadata.json --setting sql_time_limit_ms 5000
 
 serve-root:
 	.venv/bin/datasette ./aphis_reports.db --root --plugins-dir=plugins/ --metadata metadata.json
