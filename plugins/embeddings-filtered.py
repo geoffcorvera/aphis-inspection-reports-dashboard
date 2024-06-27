@@ -108,6 +108,7 @@ async def embeddings_semantic_search(datasette, request):
         join "_embeddings_{table}"
         on {pk_join}
         where "_embeddings_{table}"."{column}" is not null
+        and _similarity > CAST(:similarity_threshold AS REAL)
         order by _similarity desc
         """)
             .format(column=column_name, table=table, pk_join=pk_join, current_sql=current_sql)
@@ -120,7 +121,7 @@ async def embeddings_semantic_search(datasette, request):
             datasette.urls.database(database)
             + "?"
             + urllib.parse.urlencode(
-                {"sql": sql, "vector": blob.hex().upper(), "_hide_sql": 1, "text": q, **form}
+                {"sql": sql, "vector": blob.hex().upper(), "_hide_sql": 1, "text": q, "similarity_threshold": 0.2, **form}
             )
         )
 
