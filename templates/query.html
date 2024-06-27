@@ -1,8 +1,13 @@
 {% extends "default:query.html" %}
 {% block content %}
+<div class="search-container" id="search-container" style="display: none;">
+    <label for="previous-search-query">Results for:</label>
+    <p id="previous-search-query"></p>
+</div>
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
         const query = localStorage.getItem('semanticSearchQuery');
+        console.log({query})
         if (query) {
             document.getElementById('previous-search-query').innerText = query;
             document.getElementById('search-container').style.display = 'block';
@@ -15,6 +20,22 @@
 <div style="margin: 10px;">
 <form><input value="New semantic search" type="button" onclick="window.location.href='/{{ database }}/citation_inspection/'"></input></form>
 </div>
+<style>
+  .search-container {
+    display: flex;
+    align-items: center;
+    font-size: 1.5em; /* Adjust this value to increase/decrease text size */
+    margin-bottom: 10px;
+  }
+
+  .search-container label {
+    margin-right: 10px;
+  }
+
+  .search-container p {
+    margin: 0;
+  }
+</style>
 {{ super() }}
 
 {% endblock %}
