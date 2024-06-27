@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redirecting...</title>
+    <script type="text/javascript">
+        // Function to handle the redirection
+        function redirectToCitationInspection() {
+            window.location.href = '/aphis_reports/citation_inspection?'
+                +'_col=narrative&'
+                +'_col=desc&'
+                +'_col=web_siteName&'
+                +'_col=hash_id';
+        }
+
+        // Add event listener for DOMContentLoaded to ensure the script runs after the page has fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            redirectToCitationInspection();
+        });
+    </script>
+</head>
+<body>
+    <p>If you are not redirected automatically, <a id="redirect-link" href="#">click here</a>.</p>
+</body>
+</html>
