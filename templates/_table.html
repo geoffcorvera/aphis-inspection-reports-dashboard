@@ -33,7 +33,7 @@
                                 <tr>
                                     <tr>
                                         {% if cell.column == "hash_id" %}
-                                            <td class="col-{{ cell.column|to_css_class }} type-{{ cell.value_type }}">Incident ID</td>
+                                            <td class="col-{{ cell.column|to_css_class }} type-{{ cell.value_type }}">Incident hash_id</td>
                                         {% else %}
                                             <td class="col-{{ cell.column|to_css_class }} type-{{ cell.value_type }}">{{ cell.column }}</td>
                                         {% endif %}
