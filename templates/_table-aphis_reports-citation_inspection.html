@@ -1,0 +1,703 @@
+{% if display_rows %}
+    <table class="rows-and-columns">
+        <thead>
+            <tr>
+                {% for column in display_columns %}
+                    <th {% if column.description %}data-column-description="{{ column.description }}" {% endif %}class="col-{{ column.name|to_css_class }}" scope="col" data-column="{{ column.name }}" data-column-type="{{ column.type.lower() }}" data-column-not-null="{{ column.notnull }}" data-is-pk="{% if column.is_pk %}1{% else %}0{% endif %}">
+                        {% if not column.sortable %}
+                            {{ column.name }}
+                        {% else %}
+                            {% if column.name == sort %}
+                                <a href="{{ fix_path(path_with_replaced_args(request, {'_sort_desc': column.name, '_sort': None, '_next': None})) }}" rel="nofollow">{{ column.name }}&nbsp;▼</a>
+                            {% else %}
+                                <a href="{{ fix_path(path_with_replaced_args(request, {'_sort': column.name, '_sort_desc': None, '_next': None})) }}" rel="nofollow">{{ column.name }}{% if column.name == sort_desc %}&nbsp;▲{% endif %}</a>
+                            {% endif %}
+                        {% endif %}
+                    </th>
+                {% endfor %}
+            </tr>
+        </thead>
+    </table>
+    <hr>
+
+    {% for row in display_rows %}
+        <div class="row-container">
+            <div class="narrative-container">
+                <p class="col-narrative type-str">{{ row["narrative"] }}</p>
+            </div>
+            <div class="details-container">
+                <table>
+                    <tbody>
+                        {% for cell in row %}
+                            {% if cell.column != "narrative" %}
+                                <tr>
+                                    <tr>
+                                        {% if cell.column == "hash_id" %}
+                                            <td class="col-{{ cell.column|to_css_class }} type-{{ cell.value_type }}">Incident hash_id</td>
+                                        {% else %}
+                                            <td class="col-{{ cell.column|to_css_class }} type-{{ cell.value_type }}">{{ cell.column }}</td>
+                                        {% endif %}
+                                        <td class="col-{{ cell.column|to_css_class }} type-{{ cell.value_type }}">{{ cell.value }}</td>
+                                    </tr>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+
+<style>
+    .row-container {
+      display: flex;
+      margin-bottom: 10px;
+    }
+  
+    .narrative-container {
+      flex: 1;
+      padding-right: 10px;
+      box-sizing: border-box;
+    }
+  
+    .details-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+    }
+  
+    .narrative-container p,
+    .details-container p {
+      margin: 0;
+    }
+  
+    /* Optional: Add some padding for better readability */
+    .col-narrative {
+      padding: 10px;
+      background-color: #f9f9f9; /* Example background color */
+    }
+  
+    .details-container p {
+      padding: 5px;
+      border-bottom: 1px solid #ddd; /* Example border for separation */
+    }
+  
+  </style>
+
+    {% if display_rows %}
+    <table class="rows-and-columns">
+        <thead>
+            <tr>
+                {% for column in display_columns %}
+                    <th {% if column.description %}data-column-description="{{ column.description }}" {% endif %}class="col-{{ column.name|to_css_class }}" scope="col" data-column="{{ column.name }}" data-column-type="{{ column.type.lower() }}" data-column-not-null="{{ column.notnull }}" data-is-pk="{% if column.is_pk %}1{% else %}0{% endif %}">
+                        {% if not column.sortable %}
+                            {{ column.name }}
+                        {% else %}
+                            {% if column.name == sort %}
+                                <a href="{{ fix_path(path_with_replaced_args(request, {'_sort_desc': column.name, '_sort': None, '_next': None})) }}" rel="nofollow">{{ column.name }}&nbsp;▼</a>
+                            {% else %}
+                                <a href="{{ fix_path(path_with_replaced_args(request, {'_sort': column.name, '_sort_desc': None, '_next': None})) }}" rel="nofollow">{{ column.name }}{% if column.name == sort_desc %}&nbsp;▲{% endif %}</a>
+                            {% endif %}
+                        {% endif %}
+                    </th>
+                {% endfor %}
+            </tr>
+        </thead>
+    </table>
+    <hr>
+
+    {% for row in display_rows %}
+        <div class="row-container">
+            <div class="narrative-container">
+                <p class="col-narrative type-str">{{ row["narrative"] }}</p>
+            </div>
+            <div class="details-container">
+                <table>
+                    <tbody>
+                        {% for cell in row %}
+                            {% if cell.column != "narrative" %}
+                                <tr>
+                                    <tr>
+                                        {% if cell.column == "hash_id" %}
+                                            <td class="col-{{ cell.column|to_css_class }} type-{{ cell.value_type }}">Incident hash_id</td>
+                                        {% else %}
+                                            <td class="col-{{ cell.column|to_css_class }} type-{{ cell.value_type }}">{{ cell.column }}</td>
+                                        {% endif %}
+                                        <td class="col-{{ cell.column|to_css_class }} type-{{ cell.value_type }}">{{ cell.value }}</td>
+                                    </tr>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endfor %}
+    {% endif %}
+
+<style>
+    .row-container {
+      display: flex;
+      margin-bottom: 10px;
+    }
+  
+    .narrative-container {
+      flex: 1;
+      padding-right: 10px;
+      box-sizing: border-box;
+    }
+  
+    .details-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+    }
+  
+    .narrative-container p,
+    .details-container p {
+      margin: 0;
+    }
+  
+    /* Optional: Add some padding for better readability */
+    .col-narrative {
+      padding: 10px;
+      background-color: #f9f9f9; /* Example background color */
+    }
+  
+    .details-container p {
+      padding: 5px;
+      border-bottom: 1px solid #ddd; /* Example border for separation */
+    }
+  
+  </style>
+
+    {% if display_rows %}
+    <table class="rows-and-columns">
+        <thead>
+            <tr>
+                {% for column in display_columns %}
+                    <th {% if column.description %}data-column-description="{{ column.description }}" {% endif %}class="col-{{ column.name|to_css_class }}" scope="col" data-column="{{ column.name }}" data-column-type="{{ column.type.lower() }}" data-column-not-null="{{ column.notnull }}" data-is-pk="{% if column.is_pk %}1{% else %}0{% endif %}">
+                        {% if not column.sortable %}
+                            {{ column.name }}
+                        {% else %}
+                            {% if column.name == sort %}
+                                <a href="{{ fix_path(path_with_replaced_args(request, {'_sort_desc': column.name, '_sort': None, '_next': None})) }}" rel="nofollow">{{ column.name }}&nbsp;▼</a>
+                            {% else %}
+                                <a href="{{ fix_path(path_with_replaced_args(request, {'_sort': column.name, '_sort_desc': None, '_next': None})) }}" rel="nofollow">{{ column.name }}{% if column.name == sort_desc %}&nbsp;▲{% endif %}</a>
+                            {% endif %}
+                        {% endif %}
+                    </th>
+                {% endfor %}
+            </tr>
+        </thead>
+    </table>
+    <hr>
+
+    {% for row in display_rows %}
+        <div class="row-container">
+            <div class="narrative-container">
+                <p class="col-narrative type-str">{{ row["narrative"] }}</p>
+            </div>
+            <div class="details-container">
+                <table>
+                    <tbody>
+                        {% for cell in row %}
+                            {% if cell.column != "narrative" %}
+                                <tr>
+                                    <tr>
+                                        {% if cell.column == "hash_id" %}
+                                            <td class="col-{{ cell.column|to_css_class }} type-{{ cell.value_type }}">Incident hash_id</td>
+                                        {% else %}
+                                            <td class="col-{{ cell.column|to_css_class }} type-{{ cell.value_type }}">{{ cell.column }}</td>
+                                        {% endif %}
+                                        <td class="col-{{ cell.column|to_css_class }} type-{{ cell.value_type }}">{{ cell.value }}</td>
+                                    </tr>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endfor %}
+    {% endif %}
+
+<style>
+    .row-container {
+      display: flex;
+      margin-bottom: 10px;
+    }
+  
+    .narrative-container {
+      flex: 1;
+      padding-right: 10px;
+      box-sizing: border-box;
+    }
+  
+    .details-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+    }
+  
+    .narrative-container p,
+    .details-container p {
+      margin: 0;
+    }
+  
+    /* Optional: Add some padding for better readability */
+    .col-narrative {
+      padding: 10px;
+      background-color: #f9f9f9; /* Example background color */
+    }
+  
+    .details-container p {
+      padding: 5px;
+      border-bottom: 1px solid #ddd; /* Example border for separation */
+    }
+  
+  </style>
+
+    {% if display_rows %}
+    <table class="rows-and-columns">
+        <thead>
+            <tr>
+                {% for column in display_columns %}
+                    <th {% if column.description %}data-column-description="{{ column.description }}" {% endif %}class="col-{{ column.name|to_css_class }}" scope="col" data-column="{{ column.name }}" data-column-type="{{ column.type.lower() }}" data-column-not-null="{{ column.notnull }}" data-is-pk="{% if column.is_pk %}1{% else %}0{% endif %}">
+                        {% if not column.sortable %}
+                            {{ column.name }}
+                        {% else %}
+                            {% if column.name == sort %}
+                                <a href="{{ fix_path(path_with_replaced_args(request, {'_sort_desc': column.name, '_sort': None, '_next': None})) }}" rel="nofollow">{{ column.name }}&nbsp;▼</a>
+                            {% else %}
+                                <a href="{{ fix_path(path_with_replaced_args(request, {'_sort': column.name, '_sort_desc': None, '_next': None})) }}" rel="nofollow">{{ column.name }}{% if column.name == sort_desc %}&nbsp;▲{% endif %}</a>
+                            {% endif %}
+                        {% endif %}
+                    </th>
+                {% endfor %}
+            </tr>
+        </thead>
+    </table>
+    <hr>
+
+    {% for row in display_rows %}
+        <div class="row-container">
+            <div class="narrative-container">
+                <p class="col-narrative type-str">{{ row["narrative"] }}</p>
+            </div>
+            <div class="details-container">
+                <table>
+                    <tbody>
+                        {% for cell in row %}
+                            {% if cell.column != "narrative" %}
+                                <tr>
+                                    <tr>
+                                        {% if cell.column == "hash_id" %}
+                                            <td class="col-{{ cell.column|to_css_class }} type-{{ cell.value_type }}">Incident hash_id</td>
+                                        {% else %}
+                                            <td class="col-{{ cell.column|to_css_class }} type-{{ cell.value_type }}">{{ cell.column }}</td>
+                                        {% endif %}
+                                        <td class="col-{{ cell.column|to_css_class }} type-{{ cell.value_type }}">{{ cell.value }}</td>
+                                    </tr>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endfor %}
+    {% endif %}
+
+<style>
+    .row-container {
+      display: flex;
+      margin-bottom: 10px;
+    }
+  
+    .narrative-container {
+      flex: 1;
+      padding-right: 10px;
+      box-sizing: border-box;
+    }
+  
+    .details-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+    }
+  
+    .narrative-container p,
+    .details-container p {
+      margin: 0;
+    }
+  
+    /* Optional: Add some padding for better readability */
+    .col-narrative {
+      padding: 10px;
+      background-color: #f9f9f9; /* Example background color */
+    }
+  
+    .details-container p {
+      padding: 5px;
+      border-bottom: 1px solid #ddd; /* Example border for separation */
+    }
+  
+  </style>
+
+    {% if display_rows %}
+    <table class="rows-and-columns">
+        <thead>
+            <tr>
+                {% for column in display_columns %}
+                    <th {% if column.description %}data-column-description="{{ column.description }}" {% endif %}class="col-{{ column.name|to_css_class }}" scope="col" data-column="{{ column.name }}" data-column-type="{{ column.type.lower() }}" data-column-not-null="{{ column.notnull }}" data-is-pk="{% if column.is_pk %}1{% else %}0{% endif %}">
+                        {% if not column.sortable %}
+                            {{ column.name }}
+                        {% else %}
+                            {% if column.name == sort %}
+                                <a href="{{ fix_path(path_with_replaced_args(request, {'_sort_desc': column.name, '_sort': None, '_next': None})) }}" rel="nofollow">{{ column.name }}&nbsp;▼</a>
+                            {% else %}
+                                <a href="{{ fix_path(path_with_replaced_args(request, {'_sort': column.name, '_sort_desc': None, '_next': None})) }}" rel="nofollow">{{ column.name }}{% if column.name == sort_desc %}&nbsp;▲{% endif %}</a>
+                            {% endif %}
+                        {% endif %}
+                    </th>
+                {% endfor %}
+            </tr>
+        </thead>
+    </table>
+    <hr>
+
+    {% for row in display_rows %}
+        <div class="row-container">
+            <div class="narrative-container">
+                <p class="col-narrative type-str">{{ row["narrative"] }}</p>
+            </div>
+            <div class="details-container">
+                <table>
+                    <tbody>
+                        {% for cell in row %}
+                            {% if cell.column != "narrative" %}
+                                <tr>
+                                    <tr>
+                                        {% if cell.column == "hash_id" %}
+                                            <td class="col-{{ cell.column|to_css_class }} type-{{ cell.value_type }}">Incident hash_id</td>
+                                        {% else %}
+                                            <td class="col-{{ cell.column|to_css_class }} type-{{ cell.value_type }}">{{ cell.column }}</td>
+                                        {% endif %}
+                                        <td class="col-{{ cell.column|to_css_class }} type-{{ cell.value_type }}">{{ cell.value }}</td>
+                                    </tr>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endfor %}
+    {% endif %}
+
+<style>
+    .row-container {
+      display: flex;
+      margin-bottom: 10px;
+    }
+  
+    .narrative-container {
+      flex: 1;
+      padding-right: 10px;
+      box-sizing: border-box;
+    }
+  
+    .details-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+    }
+  
+    .narrative-container p,
+    .details-container p {
+      margin: 0;
+    }
+  
+    /* Optional: Add some padding for better readability */
+    .col-narrative {
+      padding: 10px;
+      background-color: #f9f9f9; /* Example background color */
+    }
+  
+    .details-container p {
+      padding: 5px;
+      border-bottom: 1px solid #ddd; /* Example border for separation */
+    }
+  
+  </style>
+
+    {% if display_rows %}
+    <table class="rows-and-columns">
+        <thead>
+            <tr>
+                {% for column in display_columns %}
+                    <th {% if column.description %}data-column-description="{{ column.description }}" {% endif %}class="col-{{ column.name|to_css_class }}" scope="col" data-column="{{ column.name }}" data-column-type="{{ column.type.lower() }}" data-column-not-null="{{ column.notnull }}" data-is-pk="{% if column.is_pk %}1{% else %}0{% endif %}">
+                        {% if not column.sortable %}
+                            {{ column.name }}
+                        {% else %}
+                            {% if column.name == sort %}
+                                <a href="{{ fix_path(path_with_replaced_args(request, {'_sort_desc': column.name, '_sort': None, '_next': None})) }}" rel="nofollow">{{ column.name }}&nbsp;▼</a>
+                            {% else %}
+                                <a href="{{ fix_path(path_with_replaced_args(request, {'_sort': column.name, '_sort_desc': None, '_next': None})) }}" rel="nofollow">{{ column.name }}{% if column.name == sort_desc %}&nbsp;▲{% endif %}</a>
+                            {% endif %}
+                        {% endif %}
+                    </th>
+                {% endfor %}
+            </tr>
+        </thead>
+    </table>
+    <hr>
+
+    {% for row in display_rows %}
+        <div class="row-container">
+            <div class="narrative-container">
+                <p class="col-narrative type-str">{{ row["narrative"] }}</p>
+            </div>
+            <div class="details-container">
+                <table>
+                    <tbody>
+                        {% for cell in row %}
+                            {% if cell.column != "narrative" %}
+                                <tr>
+                                    <tr>
+                                        {% if cell.column == "hash_id" %}
+                                            <td class="col-{{ cell.column|to_css_class }} type-{{ cell.value_type }}">Incident hash_id</td>
+                                        {% else %}
+                                            <td class="col-{{ cell.column|to_css_class }} type-{{ cell.value_type }}">{{ cell.column }}</td>
+                                        {% endif %}
+                                        <td class="col-{{ cell.column|to_css_class }} type-{{ cell.value_type }}">{{ cell.value }}</td>
+                                    </tr>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endfor %}
+    {% endif %}
+
+<style>
+    .row-container {
+      display: flex;
+      margin-bottom: 10px;
+    }
+  
+    .narrative-container {
+      flex: 1;
+      padding-right: 10px;
+      box-sizing: border-box;
+    }
+  
+    .details-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+    }
+  
+    .narrative-container p,
+    .details-container p {
+      margin: 0;
+    }
+  
+    /* Optional: Add some padding for better readability */
+    .col-narrative {
+      padding: 10px;
+      background-color: #f9f9f9; /* Example background color */
+    }
+  
+    .details-container p {
+      padding: 5px;
+      border-bottom: 1px solid #ddd; /* Example border for separation */
+    }
+  
+  </style>
+
+    {% if display_rows %}
+    <table class="rows-and-columns">
+        <thead>
+            <tr>
+                {% for column in display_columns %}
+                    <th {% if column.description %}data-column-description="{{ column.description }}" {% endif %}class="col-{{ column.name|to_css_class }}" scope="col" data-column="{{ column.name }}" data-column-type="{{ column.type.lower() }}" data-column-not-null="{{ column.notnull }}" data-is-pk="{% if column.is_pk %}1{% else %}0{% endif %}">
+                        {% if not column.sortable %}
+                            {{ column.name }}
+                        {% else %}
+                            {% if column.name == sort %}
+                                <a href="{{ fix_path(path_with_replaced_args(request, {'_sort_desc': column.name, '_sort': None, '_next': None})) }}" rel="nofollow">{{ column.name }}&nbsp;▼</a>
+                            {% else %}
+                                <a href="{{ fix_path(path_with_replaced_args(request, {'_sort': column.name, '_sort_desc': None, '_next': None})) }}" rel="nofollow">{{ column.name }}{% if column.name == sort_desc %}&nbsp;▲{% endif %}</a>
+                            {% endif %}
+                        {% endif %}
+                    </th>
+                {% endfor %}
+            </tr>
+        </thead>
+    </table>
+    <hr>
+
+    {% for row in display_rows %}
+        <div class="row-container">
+            <div class="narrative-container">
+                <p class="col-narrative type-str">{{ row["narrative"] }}</p>
+            </div>
+            <div class="details-container">
+                <table>
+                    <tbody>
+                        {% for cell in row %}
+                            {% if cell.column != "narrative" %}
+                                <tr>
+                                    <tr>
+                                        {% if cell.column == "hash_id" %}
+                                            <td class="col-{{ cell.column|to_css_class }} type-{{ cell.value_type }}">Incident hash_id</td>
+                                        {% else %}
+                                            <td class="col-{{ cell.column|to_css_class }} type-{{ cell.value_type }}">{{ cell.column }}</td>
+                                        {% endif %}
+                                        <td class="col-{{ cell.column|to_css_class }} type-{{ cell.value_type }}">{{ cell.value }}</td>
+                                    </tr>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endfor %}
+    {% endif %}
+
+<style>
+    .row-container {
+      display: flex;
+      margin-bottom: 10px;
+    }
+  
+    .narrative-container {
+      flex: 1;
+      padding-right: 10px;
+      box-sizing: border-box;
+    }
+  
+    .details-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+    }
+  
+    .narrative-container p,
+    .details-container p {
+      margin: 0;
+    }
+  
+    /* Optional: Add some padding for better readability */
+    .col-narrative {
+      padding: 10px;
+      background-color: #f9f9f9; /* Example background color */
+    }
+  
+    .details-container p {
+      padding: 5px;
+      border-bottom: 1px solid #ddd; /* Example border for separation */
+    }
+  
+  </style>
+
+    {% if display_rows %}
+    <table class="rows-and-columns">
+        <thead>
+            <tr>
+                {% for column in display_columns %}
+                    <th {% if column.description %}data-column-description="{{ column.description }}" {% endif %}class="col-{{ column.name|to_css_class }}" scope="col" data-column="{{ column.name }}" data-column-type="{{ column.type.lower() }}" data-column-not-null="{{ column.notnull }}" data-is-pk="{% if column.is_pk %}1{% else %}0{% endif %}">
+                        {% if not column.sortable %}
+                            {{ column.name }}
+                        {% else %}
+                            {% if column.name == sort %}
+                                <a href="{{ fix_path(path_with_replaced_args(request, {'_sort_desc': column.name, '_sort': None, '_next': None})) }}" rel="nofollow">{{ column.name }}&nbsp;▼</a>
+                            {% else %}
+                                <a href="{{ fix_path(path_with_replaced_args(request, {'_sort': column.name, '_sort_desc': None, '_next': None})) }}" rel="nofollow">{{ column.name }}{% if column.name == sort_desc %}&nbsp;▲{% endif %}</a>
+                            {% endif %}
+                        {% endif %}
+                    </th>
+                {% endfor %}
+            </tr>
+        </thead>
+    </table>
+    <hr>
+
+    {% for row in display_rows %}
+        <div class="row-container">
+            <div class="narrative-container">
+                <p class="col-narrative type-str">{{ row["narrative"] }}</p>
+            </div>
+            <div class="details-container">
+                <table>
+                    <tbody>
+                        {% for cell in row %}
+                            {% if cell.column != "narrative" %}
+                                <tr>
+                                    <tr>
+                                        {% if cell.column == "hash_id" %}
+                                            <td class="col-{{ cell.column|to_css_class }} type-{{ cell.value_type }}">Incident hash_id</td>
+                                        {% else %}
+                                            <td class="col-{{ cell.column|to_css_class }} type-{{ cell.value_type }}">{{ cell.column }}</td>
+                                        {% endif %}
+                                        <td class="col-{{ cell.column|to_css_class }} type-{{ cell.value_type }}">{{ cell.value }}</td>
+                                    </tr>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endfor %}
+    {% endif %}
+
+<style>
+    .row-container {
+      display: flex;
+      margin-bottom: 10px;
+    }
+  
+    .narrative-container {
+      flex: 1;
+      padding-right: 10px;
+      box-sizing: border-box;
+    }
+  
+    .details-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+    }
+  
+    .narrative-container p,
+    .details-container p {
+      margin: 0;
+    }
+  
+    /* Optional: Add some padding for better readability */
+    .col-narrative {
+      padding: 10px;
+      background-color: #f9f9f9; /* Example background color */
+    }
+  
+    .details-container p {
+      padding: 5px;
+      border-bottom: 1px solid #ddd; /* Example border for separation */
+    }
+  
+  </style>
