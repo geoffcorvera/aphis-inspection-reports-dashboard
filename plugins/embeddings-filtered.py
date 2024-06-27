@@ -28,10 +28,12 @@ async def embedding_columns_for_table(datasette, database, table) -> dict:
     shadow_table = f"_embeddings_{table}"
     db = datasette.get_database(database)
     if not await db.table_exists(shadow_table):
+        print("SHADOW TABLE NOT FOUND")
         return {}
     columns = await db.table_columns(shadow_table)
     emb_columns = [column for column in columns if column.startswith("emb_")]
     if not emb_columns:
+        print("emb_columns empty")
         return {}
 
     # Return each column for which an embedding model exists
