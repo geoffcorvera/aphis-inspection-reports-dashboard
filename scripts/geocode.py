@@ -8,7 +8,11 @@ import urllib.parse
 load_dotenv()
 
 def _geocode(address):
-    escaped = urllib.parse.quote(address)
+    try:
+        escaped = urllib.parse.quote(address)
+    except TypeError:
+        escaped = address
+
     url = f"https://maps.googleapis.com/maps/api/geocode/json?address={escaped}&key={os.environ['GOOGLE_MAPS_API_KEY']}"
     print(url)
     r = requests.get(url)
