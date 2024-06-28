@@ -25,8 +25,8 @@ prejoin-data:
 load-embeddings:
 	sqlite3 aphis_reports_embeddings.db ".dump _embeddings_citations" > embeddings.sql
 	sqlite3 aphis_reports.db < embeddings.sql
-	sqlite-utils rename-table aphis_reports.db _embeddings_citations _embeddings_citation_inspection
-	sqlite-utils transform aphis_reports.db citation_inspection --pk rowid
+	.venv/bin/sqlite-utils rename-table aphis_reports.db _embeddings_citations _embeddings_citation_inspection
+	.venv/bin/sqlite-utils transform aphis_reports.db citation_inspection --pk rowid
 	
 database: fetch-data create-db prejoin-data load-embeddings
 
