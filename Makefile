@@ -19,13 +19,16 @@ create-db:
 	.venv/bin/sqlite-utils enable-fts aphis_reports.db citations narrative
 	.venv/bin/sqlite-utils transform aphis_reports.db citations --pk rowid
 
+prejoin-data:
+	.venv/bin/python3 scripts/prejoin_data.py
+
 load-embeddings:
 	sqlite3 aphis_reports_embeddings.db ".dump _embeddings_citations" > embeddings.sql
 	sqlite3 aphis_reports.db < embeddings.sql
 	sqlite-utils rename-table aphis_reports.db _embeddings_citations _embeddings_citation_inspection
 	sqlite-utils transform aphis_reports.db citation_inspection --pk rowid
 	
-database: fetch-data create-db load-embeddings
+database: fetch-data create-db prejoin-data load-embeddings
 
 serve:
 	.venv/bin/datasette ./aphis_reports.db --plugins-dir=plugins/ --metadata metadata.json --setting sql_time_limit_ms 5000 --template-dir=templates/
