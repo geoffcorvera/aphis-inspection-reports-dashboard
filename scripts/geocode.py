@@ -8,6 +8,8 @@ from tqdm import tqdm
 
 load_dotenv()
 
+geocodes_filename = 'geocode.json'
+
 def _geocode(address):
     try:
         escaped = urllib.parse.quote(address)
@@ -29,18 +31,27 @@ def geocode(address):
     addy_dict[address] = _geocode(address)
     return addy_dict[address]
 
-geocode("14330 W. Sylvanfield Dr. Houston, TX 77014")
+def load_geocode_json():
+    try:
+        with open(geocodes_filename) as f:
+            j = json.loads(f.read())
+    except:
+        j = []
+    
+    for row in j:
+        addy_dict[row['pdf_customer_addr']] = row['lat'], row['lng']
+    
 
 db = Database('aphis_reports.db', recreate=False)
 for row in tqdm(db.query('select hash_id, pdf_customer_addr, customer_state from inspections')):
     # print(row)
     lat,lng = geocode(row['pdf_customer_addr'])
     try:
-        with open('geocode.json') as f:
+        with open(geocodes_filename) as f:
             j = json.loads(f.read())
     except:
         j = []
     j.append({"lat": lat, "lng": lng, **row})
     with open('_geocode.json', 'w') as f:
         f.write(json.dumps(j))
-    os.rename('_geocode.json', 'geocode.json')
+    os.rename('_geocode.json', geocodes_filename)

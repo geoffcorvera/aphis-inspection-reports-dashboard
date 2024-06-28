@@ -33,8 +33,10 @@ database: fetch-data create-db prejoin-data load-embeddings
 
 load-geocodes:
 	.venv/bin/python3 scripts/insert_geocodes.py
-	sqlite-utils aphis_reports.db "UPDATE inspections SET lng = geocodes.lng FROM geocodes WHERE inspections.hash_id = geocodes.hash_id"
-	sqlite-utils aphis_reports.db "UPDATE inspections SET lat = geocodes.lat FROM geocodes WHERE inspections.hash_id = geocodes.hash_id"
+	sqlite-utils aphis_reports.db "UPDATE inspections SET lng = geocodes.lng FROM geocodes WHERE inspections.hash_id = geocodes.hash_id;"
+	sqlite-utils aphis_reports.db "UPDATE inspections SET lat = geocodes.lat FROM geocodes WHERE inspections.hash_id = geocodes.hash_id;"
+	sqlite-utils aphis_reports.db "UPDATE citation_inspection SET lng = geocodes.lng FROM geocodes WHERE citation_inspection.hash_id = geocodes.hash_id;"
+	sqlite-utils aphis_reports.db "UPDATE citation_inspection SET lat = geocodes.lat FROM geocodes WHERE citation_inspection.hash_id = geocodes.hash_id;"
 	sqlite-utils drop-table aphis_reports.db geocodes
 
 serve:

@@ -9,5 +9,6 @@ db = Database('aphis_reports.db', recreate=True)
 
 inspection_rows = read_csv_file('aphis-inspection-reports/data/combined/inspections.csv', pk=['hash_id'])
 db['inspections'].insert_all(inspection_rows, pk='hash_id')
+db.execute('DELETE FROM inspections WHERE hash_id IS NULL')
 citations_rows = read_csv_file('aphis-inspection-reports/data/combined/inspections-citations.csv')
 db['citations'].insert_all(citations_rows, foreign_keys=[('hash_id', 'inspections', 'hash_id')])
