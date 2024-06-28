@@ -26,18 +26,18 @@ prejoin-data:
 load-embeddings:
 	sqlite3 aphis_reports_embeddings.db ".dump _embeddings_citations" > embeddings.sql
 	sqlite3 aphis_reports.db < embeddings.sql
-	sqlite-utils rename-table aphis_reports.db _embeddings_citations _embeddings_citation_inspection
-	sqlite-utils transform aphis_reports.db citation_inspection --pk rowid
+	.venv/bin/sqlite-utils rename-table aphis_reports.db _embeddings_citations _embeddings_citation_inspection
+	.venv/bin/sqlite-utils transform aphis_reports.db citation_inspection --pk rowid
 	
 database: fetch-data create-db prejoin-data load-embeddings
 
 load-geocodes:
 	.venv/bin/python3 scripts/insert_geocodes.py
-	sqlite-utils aphis_reports.db "UPDATE inspections SET lng = geocodes.lng FROM geocodes WHERE inspections.hash_id = geocodes.hash_id;"
-	sqlite-utils aphis_reports.db "UPDATE inspections SET lat = geocodes.lat FROM geocodes WHERE inspections.hash_id = geocodes.hash_id;"
-	sqlite-utils aphis_reports.db "UPDATE citation_inspection SET lng = geocodes.lng FROM geocodes WHERE citation_inspection.hash_id = geocodes.hash_id;"
-	sqlite-utils aphis_reports.db "UPDATE citation_inspection SET lat = geocodes.lat FROM geocodes WHERE citation_inspection.hash_id = geocodes.hash_id;"
-	sqlite-utils drop-table aphis_reports.db geocodes
+	.venv/bin/sqlite-utils aphis_reports.db "UPDATE inspections SET lng = geocodes.lng FROM geocodes WHERE inspections.hash_id = geocodes.hash_id;"
+	.venv/bin/sqlite-utils aphis_reports.db "UPDATE inspections SET lat = geocodes.lat FROM geocodes WHERE inspections.hash_id = geocodes.hash_id;"
+	.venv/bin/sqlite-utils aphis_reports.db "UPDATE citation_inspection SET lng = geocodes.lng FROM geocodes WHERE citation_inspection.hash_id = geocodes.hash_id;"
+	.venv/bin/sqlite-utils aphis_reports.db "UPDATE citation_inspection SET lat = geocodes.lat FROM geocodes WHERE citation_inspection.hash_id = geocodes.hash_id;"
+	.venv/bin/sqlite-utils drop-table aphis_reports.db geocodes
 
 serve:
 	.venv/bin/datasette ./aphis_reports.db --plugins-dir=plugins/ --metadata metadata.json --setting sql_time_limit_ms 5000 --template-dir=templates/
