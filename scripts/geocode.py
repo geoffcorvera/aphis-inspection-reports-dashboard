@@ -3,11 +3,13 @@ import json
 import requests
 import os
 from sqlite_utils import Database
+import urllib.parse
 
 load_dotenv()
 
 def _geocode(address):
-    url = f"https://maps.googleapis.com/maps/api/geocode/json?address={address}&key={os.environ['GOOGLE_MAPS_API_KEY']}"
+    escaped = urllib.parse.quote(address)
+    url = f"https://maps.googleapis.com/maps/api/geocode/json?address={escaped}&key={os.environ['GOOGLE_MAPS_API_KEY']}"
     print(url)
     r = requests.get(url)
     j = r.json()['results'][0]
