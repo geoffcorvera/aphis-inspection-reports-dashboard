@@ -25,7 +25,7 @@ def geocode(address):
 geocode("14330 W. Sylvanfield Dr. Houston, TX 77014")
 
 db = Database('aphis_reports.db', recreate=False)
-for row in db.query('select rowid, pdf_customer_addr, customer_state from inspections limit 10'):
+for row in db.query('select hash_id, pdf_customer_addr, customer_state from inspections limit 10'):
     print(row)
     lat,lng = geocode(row['pdf_customer_addr'])
     try:

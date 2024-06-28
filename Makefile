@@ -31,6 +31,12 @@ load-embeddings:
 	
 database: fetch-data create-db prejoin-data load-embeddings
 
+load-geocodes:
+	.venv/bin/python3 scripts/insert_geocodes.py
+	sqlite-utils aphis_reports.db "UPDATE inspections SET lng = geocodes.lng FROM geocodes WHERE inspections.hash_id = geocodes.hash_id"
+	sqlite-utils aphis_reports.db "UPDATE inspections SET lat = geocodes.lat FROM geocodes WHERE inspections.hash_id = geocodes.hash_id"
+	sqlite-utils drop-table aphis_reports.db geocodes
+
 serve:
 	.venv/bin/datasette ./aphis_reports.db --plugins-dir=plugins/ --metadata metadata.json --setting sql_time_limit_ms 5000 --template-dir=templates/
 
