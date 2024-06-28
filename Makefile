@@ -8,6 +8,7 @@ install:
 	.venv/bin/pip install -r requirements.txt
 	.venv/bin/datasette install datasette-enrichments
 	.venv/bin/datasette install datasette-embeddings
+	.venv/bin/datasette install datasette-cluster-map
 
 fetch-data:
 	mkdir -p aphis-inspection-reports/data/combined
