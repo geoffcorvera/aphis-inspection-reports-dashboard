@@ -5,6 +5,10 @@
             "api_key": {
                 "$env": "OPENAI_API_KEY"
             }
+        },
+        "datasette-cluster-map": {
+            "latitude_column": "lat",
+            "longitude_column": "lng"
         }
     }
 }
