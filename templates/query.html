@@ -10,7 +10,7 @@
         console.log({query})
         if (query) {
             document.getElementById('previous-search-query').innerText = query;
-            document.getElementById('search-container').style.display = 'block';
+            document.getElementById('search-container').style.display = 'flex';
         } else {
             document.getElementById('search-container').style.display = 'none';
         }
@@ -30,6 +30,7 @@
 
   .search-container label {
     margin-right: 10px;
+
   }
 
   .search-container p {
