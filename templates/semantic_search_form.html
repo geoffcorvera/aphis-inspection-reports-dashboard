@@ -1,20 +1,21 @@
-<form method="POST" action="/{{database}}/citation_inspection/-/semantic-search-filtered" onsubmit="storeQuery()">
-  <p><label>Semantic search
-    <input type="text" name="q" size="60" id="search-query">
-    <input type="submit" value="Go">
-    <input type="hidden" name="csrftoken" value="{{ csrftoken() }}">
-    {% if query and query.sql %}
-      <input type="hidden" name="sql" value="{{ query.sql }}">
-    {% else %}
-      <input type="hidden" name="sql" value="select rowid, hash_id, code, kind, repeat, [desc], narrative from citations order by rowid">
-    {% endif %}
-    {% if query and query.params %}
-      {% for key in query.params %}
-        <input type="hidden" name="{{ key }}" value="{{ query.params[key] }}">
-      {% endfor %}
-    {% endif %}
-  </p>
-</form>
+<div class="search-container">
+  <h3>Semantic search</h3>
+  <form class="search-form" method="POST" action="/{{database}}/citation_inspection/-/semantic-search-filtered" onsubmit="storeQuery()">
+      <input type="text" name="q" size="60" id="search-query">
+      <input type="submit" value="Go">
+      <input type="hidden" name="csrftoken" value="{{ csrftoken() }}">
+      {% if query and query.sql %}
+        <input type="hidden" name="sql" value="{{ query.sql }}">
+      {% else %}
+        <input type="hidden" name="sql" value="select rowid, hash_id, code, kind, repeat, [desc], narrative from citations order by rowid">
+      {% endif %}
+      {% if query and query.params %}
+        {% for key in query.params %}
+          <input type="hidden" name="{{ key }}" value="{{ query.params[key] }}">
+        {% endfor %}
+      {% endif %}
+  </form>
+</div>
 
 <script>
     function storeQuery() {
@@ -22,20 +23,23 @@
       localStorage.setItem('semanticSearchQuery', query);
     }
 </script>
+
 <style>
-  .search-container {
-    display: flex;
-    align-items: center;
+  .search-form  {
     margin: 10px;
   }
 
-  .search-container label {
-    margin-right: 10px;
+  .search-container {
+    display: flex;
+    margin-bottom: 10px;
   }
 
-  .search-container p {
-    margin: 0;
-    margin-left: 10px;
-    flex-shrink: 0; /* idk why this is taking up the whole page width */
+  @media only screen and (max-width: 576px) {
+    .search-container {
+      display: block;
+    }
+    .search-form {
+      margin: 5px;
+    }
   }
 </style>
