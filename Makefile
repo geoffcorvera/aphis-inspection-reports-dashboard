@@ -8,6 +8,7 @@ install:
 	.venv/bin/pip install -r requirements.txt
 	.venv/bin/datasette install datasette-enrichments
 	.venv/bin/datasette install datasette-embeddings
+	.venv/bin/datasette install datasette-cluster-map
 
 fetch-data:
 	mkdir -p aphis-inspection-reports/data/combined
@@ -29,6 +30,14 @@ load-embeddings:
 	.venv/bin/sqlite-utils transform aphis_reports.db citation_inspection --pk rowid
 
 database: fetch-data create-db prejoin-data load-embeddings
+
+load-geocodes:
+	.venv/bin/python3 scripts/insert_geocodes.py
+	.venv/bin/sqlite-utils aphis_reports.db "UPDATE inspections SET lng = geocodes.lng FROM geocodes WHERE inspections.hash_id = geocodes.hash_id;"
+	.venv/bin/sqlite-utils aphis_reports.db "UPDATE inspections SET lat = geocodes.lat FROM geocodes WHERE inspections.hash_id = geocodes.hash_id;"
+	.venv/bin/sqlite-utils aphis_reports.db "UPDATE citation_inspection SET lng = geocodes.lng FROM geocodes WHERE citation_inspection.hash_id = geocodes.hash_id;"
+	.venv/bin/sqlite-utils aphis_reports.db "UPDATE citation_inspection SET lat = geocodes.lat FROM geocodes WHERE citation_inspection.hash_id = geocodes.hash_id;"
+	.venv/bin/sqlite-utils drop-table aphis_reports.db geocodes
 
 serve:
 	.venv/bin/datasette ./aphis_reports.db --plugins-dir=plugins/ --metadata metadata.json --setting sql_time_limit_ms 5000 --template-dir=templates/
