@@ -95,10 +95,12 @@
                               <tr>
                                   {% if loop.index0 == columns.index("hash_id") %}
                                       <td class="col-{{ columns[loop.index0]|to_css_class }} type-str">Incident hash_id</td>
+                                      <td class="col-{{ columns[loop.index0]|to_css_class }} type-str"><a href="{{ urls.path(urls.table(database, 'inspections')+'/'+val) }}">{{ val }}</a></td>
+
                                   {% else %}
                                       <td class="col-{{ columns[loop.index0]|to_css_class }} type-str">{{ columns[loop.index0] }}</td>
+                                      <td class="col-{{ columns[loop.index0]|to_css_class }} type-str">{{ val }}</td>
                                   {% endif %}
-                                  <td class="col-{{ columns[loop.index0]|to_css_class }} type-str">{{ val }}</td>
                               </tr>
                           </tr>
                       {% endif %}
