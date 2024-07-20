@@ -1,28 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Redirecting...</title>
-    <script type="text/javascript">
-        // Function to handle the redirection
-        function redirectToCitationInspection() {
-            window.location.href = '/aphis_reports/citation_inspection?'
-                +'_col=narrative&'
-                +'_col=desc&'
-                +'_col=web_siteName&'
-                +'_col=web_inspectionDate&'
-                +'_col=hash_id&'
-                +'_col=lng&'
-                +'_col=lat&'
-                +'_col=doccloud_url';
-        }
+{% extends "default:base.html" %}
+{% block content %}
 
-        // Add event listener for DOMContentLoaded to ensure the script runs after the page has fully loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            redirectToCitationInspection();
-        });
-    </script>
-</head>
-<body>
-    <p>If you are not redirected automatically, <a id="redirect-link" href="#">click here</a>.</p>
-</body>
-</html>
+    <h1>APHIS inspections data exploration</h1>
+    <h2><a href="/aphis_reports/citation_inspection">Browse data</a></h2>
+    <h6>What is this?</h6>
+    <p>This is a semantic search tool for the USDA Animal and Plant Health Inspection Service (APHIS).</p>
+    <p>For documentation on the dataset, read <a href="https://docs.google.com/document/d/19rnwJfahCm9ld-71mkgKJjWhphsuOCCx3ZauL1lIuHE/edit#heading=h.gsqormd9wk52">this FAQ</a> or the <a href="https://github.com/data-liberation-project/aphis-inspection-reports">GitHub repository</a>.</p>
+    <h6>Data ingestion and known issues</h6>
+    <p>We pull data from the repository, combine it into a single table, and use the OpenAI API to make each citation's full text searchable.</p>
+    <h6>Contact</h6>
+    <a href="https://github.com/data-liberation-project/aphis-inspection-reports">https://github.com/data-liberation-project/aphis-inspection-reports</a>
+    <br>
+    <a href="mailto:contact@noomatic.tube">contact@noomatic.tube</a>
+
+{% endblock %}
