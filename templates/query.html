@@ -1,22 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="search-container" id="search-container" style="display: none;">
+<div class="search-container" id="search-container">
     <label for="previous-search-query">Results for:</label>
-    <p id="previous-search-query"></p>
-</div>
-<script>
-    document.addEventListener('DOMContentLoaded', (event) => {
-        const query = localStorage.getItem('semanticSearchQuery');
-        console.log({query})
-        if (query) {
-            document.getElementById('previous-search-query').innerText = query;
-            document.getElementById('search-container').style.display = 'flex';
-        } else {
-            document.getElementById('search-container').style.display = 'none';
-        }
-        localStorage.setItem('semanticSearchQuery', ""); // downside is this erases if you reload the page, but won't show inaccurate results
-  });
-</script>
+    <p>{{ query.get('params', {}).get('text', '(not found)') }}</p>
+  </div>
 <div style="margin: 10px;">
 <form><input value="New semantic search" type="button" onclick="window.location.href='/{{ database }}/citation_inspection/'"></input></form>
 </div>
