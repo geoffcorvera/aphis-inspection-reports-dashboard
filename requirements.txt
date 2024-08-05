@@ -9,7 +9,7 @@ charset-normalizer==3.3.2
 click==8.1.7
 click-default-group==1.2.4
 cryptography==42.0.8
-datasette==0.64.6
+datasette==0.64.8
 datasette-cluster-map==0.18.2
 datasette-embeddings==0.1a3
 datasette-enrichments==0.4.2
