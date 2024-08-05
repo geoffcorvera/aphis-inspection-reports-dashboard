@@ -1,24 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="search-container" id="search-container" style="display: none;">
+<div class="search-container" id="search-container">
     <label for="previous-search-query">Results for:</label>
-    <p id="previous-search-query"></p>
-</div>
-<script>
-    document.addEventListener('DOMContentLoaded', (event) => {
-        const query = localStorage.getItem('semanticSearchQuery');
-        console.log({query})
-        if (query) {
-            document.getElementById('previous-search-query').innerText = query;
-            document.getElementById('search-container').style.display = 'flex';
-        } else {
-            document.getElementById('search-container').style.display = 'none';
-        }
-        localStorage.setItem('semanticSearchQuery', ""); // downside is this erases if you reload the page, but won't show inaccurate results
-  });
-</script>
+    <p>{{ query.get('params', {}).get('text', '(not found)') }}</p>
+  </div>
 <div style="margin: 10px;">
-<form><input value="New semantic search" type="button" onclick="window.location.href='/{{ database }}/citation_inspection/'"></input></form>
+<form><input id="semsearch-button" value="New semantic search" type="button" onclick="window.location.href='/{{ database }}/citation_inspection/'"></input></form>
 </div>
 <style>
   .search-container {
@@ -167,6 +154,24 @@
   div .even {
       background-color: rgb(217, 235, 240);
   }
+
+  #semsearch-button {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+    -webkit-appearance: button;
+    font-weight: 400;
+    cursor: pointer;
+    text-align: center;
+    vertical-align: middle;
+    border-width: 1px;
+    border-style: solid;
+    padding: .5em 0.8em;
+    font-size: 0.9rem;
+    line-height: 1;
+    border-radius: .25rem;
+}
 </style>
 
 {% endblock %}
+<footer class="ft">{% block footer %}Built by <a href="https://noomatic.tube">Noomatic</a> and <a href="https://github.com/geoffcorvera">Geoff</a> · {% include "default:_footer.html" %}{% endblock %}</footer>

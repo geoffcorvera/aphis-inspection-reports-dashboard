@@ -1,4 +1,5 @@
 {% extends "default:base.html" %}
+{% block title %}APHIS data explorer{% endblock %}
 {% block content %}
 
     <h1>APHIS inspections data exploration</h1>
@@ -15,3 +16,4 @@
     Dashboard: <a href="mailto:contact@noomatic.tube">contact@noomatic.tube</a>
 
 {% endblock %}
+<footer class="ft">{% block footer %}Built by <a href="https://noomatic.tube">Noomatic</a> and <a href="https://github.com/geoffcorvera">Geoff</a> ⋅ {% include "default:_footer.html" %}{% endblock %}</footer>
